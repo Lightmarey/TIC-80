@@ -1,17 +1,17 @@
 name: Build TIC-80 PRO
 
 on:
-  workflow_dispatch: # 允许我们手动点击按钮触发编译
+  workflow_dispatch: 
 
 jobs:
   build-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout TIC-80 Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4   # 已更新到 v4
         with:
           repository: nesbox/TIC-80
-          submodules: recursive # 必须克隆所有子模块
+          submodules: recursive 
 
       - name: Configure CMake (Enable PRO)
         run: cmake -B build -S . -DBUILD_PRO=On -DCMAKE_BUILD_TYPE=Release
@@ -20,7 +20,7 @@ jobs:
         run: cmake --build build --config Release
 
       - name: Upload Pro Binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4   # 已更新到 v4，解决了报错！
         with:
           name: tic80-pro-windows
           path: build/bin/Release/tic80.exe
